@@ -7,6 +7,11 @@
     <AddTodo 
     v-on:add-todo="addTodo"
     />
+    <select v-model="filter">
+      <option value="all">All</option>
+      <option value="completed">Completed</option>
+      <option value="not-completed">Not completed</option>
+    </select>
     <hr>
     <transition name="slide-fade" mode="out-in">
       <Loader 
@@ -14,7 +19,7 @@
       />
       <TodoList 
         v-else-if="!loading"
-        v-bind:todos="todos"
+        v-bind:todos="filteredTodos"
         v-on:remove-todo="removeTodo"
       />
     </transition>
@@ -31,7 +36,8 @@ export default {
   data() {
     return {
       todos:[],
-      loading: true
+      loading: true,
+      filter: 'all'
     }
   },
   components: {
@@ -55,6 +61,17 @@ export default {
       this.updateData()
       this.loading = false
     }, 1500)
+  },
+  computed: {
+    filteredTodos() {
+      if(this.filter === 'all') {
+        return this.todos
+      } else if(this.filter === 'completed') {
+        return this.todos.filter(t => t.completed)
+      } else if(this.filter === 'not-completed') {
+        return this.todos.filter(t => !t.completed)
+      }
+    }
   }
 }
 </script>

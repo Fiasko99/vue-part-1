@@ -32,8 +32,18 @@ export default {
 <style scoped>
     form {
         display: flex;
+        margin: 0.5rem;
+        padding: 1rem;
+        border: 2px solid #888;
+        border-radius: 4px;
     }
     input {
         width: 100%;
+        margin-right: 1rem;
+        border-radius: 4px;
+        border: 1px solid #666;
+    }
+    input:focus {
+        outline: none;
     }
 </style>
