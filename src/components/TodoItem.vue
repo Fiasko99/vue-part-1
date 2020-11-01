@@ -1,6 +1,6 @@
 <template>
   <li>
-      <span v-bind:class="{done: todo.completed}">
+      <span v-bind:class="{done: todo.completed}" class="todo-title" :data="todo.title">
           <input type="checkbox" v-on:change="todo.completed = !todo.completed">
           <strong>{{index + 1}}</strong>
           {{todo.title}}
@@ -27,11 +27,32 @@ export default {
 
 <style scoped>
  li {
-     border: 1px solid #ccc;
-     display: flex;
-     justify-content: space-between;
-     padding: 0.5rem 2rem;
-     margin: 1rem;
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 1.5rem;
+    margin: 1rem;
+    position: relative;
+ }
+ .todo-title {
+    width: 70% !important;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: left;
+ }
+ .todo-title:hover::after {
+    content: attr(data);
+    position: absolute;
+    left: 3rem;
+    top: 3rem;
+    min-width: 200px;
+    border: 1px #ccc solid;
+    background-color: #ffffcc;
+    padding: 0.5rem 1.5rem;
+    color: #000000;
+    font-size: 14px;
+    z-index: 1;
  }
  .rm {
      background: #ccc;

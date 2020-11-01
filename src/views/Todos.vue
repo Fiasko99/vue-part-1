@@ -8,26 +8,34 @@
     v-on:add-todo="addTodo"
     />
     <hr>
-    <TodoList 
-    v-bind:todos="todos"
-    v-on:remove-todo="removeTodo"
-    />
+    <transition name="slide-fade" mode="out-in">
+      <Loader 
+        v-if="loading"
+      />
+      <TodoList 
+        v-else-if="!loading"
+        v-bind:todos="todos"
+        v-on:remove-todo="removeTodo"
+      />
+    </transition>
   </div>
 </template>
 
 <script>
 import TodoList from '@/components/TodoList'
 import AddTodo from '@/components/AddTodo'
+import Loader from '@/components/Loader'
 
 export default {
   name: 'App',
   data() {
     return {
-      todos:[]
+      todos:[],
+      loading: true
     }
   },
   components: {
-    TodoList, AddTodo
+    TodoList, AddTodo, Loader
   },
   methods: {
     removeTodo(id) {
@@ -43,7 +51,10 @@ export default {
     }
   },
   mounted() {
-    this.updateData()
+    setTimeout(() => {
+      this.updateData()
+      this.loading = false
+    }, 1500)
   }
 }
 </script>
